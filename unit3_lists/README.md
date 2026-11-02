@@ -90,21 +90,22 @@ Your reflection should be approximately 150–200 words and address the followin
 2. What challenges did you encounter, and how did you overcome them?
 3. How do list operations impact performance in real-world applications?
 
-I needed to understand why the deletion function rejected negative indices
-when Python allowed them. An index of `-1` identified the last entry, but
-`delete_at()` returned `None` for that index. Tracing the function showed me
-that its bounds check rejected the value before `pop()` ran.
+I kept deletion limited to nonnegative positions because `search_value()`
+returned `-1` when a ticket was missing. Python normally interprets that
+index as the last item. If a caller passed a missing search result directly
+to `pop()`, it could remove an unrelated ticket. Rejecting negative indices
+in `delete_at()` prevented that removal, while the caller could still check
+the search result before requesting deletion.
 
-I also questioned the use of `None` instead of an exception. Comparing the
-two approaches clarified what happened after an unsuccessful deletion.
-`None` was a normal return value, so execution continued even if the caller
-ignored it. An uncaught `IndexError` interrupted execution. The starter
-required `None`, and the calling code could check that value to decide what
-to do next.
+I followed the requirement to return `None` for invalid indices, but also
+considered when I would choose to raise `IndexError` instead. I needed to
+clarify how each choice affected the caller, so I worked through examples
+of both. Returning `None` let execution continue and left the caller
+responsible for checking the result. Raising `IndexError` would interrupt
+execution unless the caller or another part of the program caught it.
 
-The worklist showed how the position of a change affected the amount of
-work. Placing `"INC1004"` first shifted all three original entries. The end
-insertion shifted none. Searching for `"INC9999"` checked every remaining
-ticket before returning `-1`. In a larger worklist, the same missing-ticket
-search would require more comparisons, and inserting at the front would
-shift more entries.
+For the worklist, operation positions affected performance. Inserting an
+urgent ticket first shifted every existing entry, while end insertion
+shifted none. Searching for a missing ticket checked the entire list. A
+larger worklist would therefore increase the work required for front
+insertions and unsuccessful searches.
