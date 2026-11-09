@@ -155,13 +155,13 @@ def main():
     print("\n=== TREE CONSTRUCTION ===")
 
     tickets = BST()
-    ticket_ids = [1050, 1025, 1075, 1010, 1035, 1060, 1090, 1030, 1040]
+    ticket_ids = [6000, 5963, 6078, 5914, 5987, 6031, 6096, 5972, 5991]
 
     # This insertion order places ticket IDs on both sides of the root.
     for ticket_id in ticket_ids:
         tickets.insert(ticket_id)
 
-    # Searching for an ID below 1050 skips the root's entire right subtree.
+    # Searching for an ID below 6000 skips the root's entire right subtree.
     # Further comparisons narrow the search to one branch at each node.
     print("Support ticket IDs in insertion order:", ticket_ids)
     print("Root ticket ID:", tickets.root.value)
@@ -194,15 +194,15 @@ def main():
     print("\n=== SEARCH TESTS ===")
 
     # Both IDs were inserted, so each search should return True.
-    for ticket_id in [1050, 1030]:
+    for ticket_id in [6000, 5972]:
         print(
             f"Search for existing ticket {ticket_id}: "
             f"{tickets.search(ticket_id)} (expected True)"
         )
 
-    # 1000 is below the smallest ID; 1065 falls between stored IDs.
+    # 5902 is below the smallest ID; 6053 falls between stored IDs.
     # Both searches reach an empty position and return False.
-    for ticket_id in [1000, 1065]:
+    for ticket_id in [5902, 6053]:
         print(
             f"Search for missing ticket {ticket_id}: "
             f"{tickets.search(ticket_id)} (expected False)"
@@ -228,15 +228,15 @@ def main():
 
     # An empty tree has no IDs to collect and no matching node to find.
     print("Empty tree traversal:", empty_tickets.inorder(), "(expected [])")
-    print("Search empty tree for 1050:", empty_tickets.search(1050),
+    print("Search empty tree for 6000:", empty_tickets.search(6000),
           "(expected False)")
 
     # Reinserting an existing ID should leave the stored IDs unchanged.
     before_duplicate = tickets.inorder()
-    tickets.insert(1035)
+    tickets.insert(5987)
     after_duplicate = tickets.inorder()
 
-    print("Ticket IDs after inserting duplicate 1035:", after_duplicate)
+    print("Ticket IDs after inserting duplicate 5987:", after_duplicate)
     print("Stored IDs unchanged:", before_duplicate == after_duplicate,
           "(expected True)")
 
@@ -257,7 +257,7 @@ def main():
         current = current.right
 
     print("IDs along right-child links:", right_chain)
-    print("Search for 1090:", sequential_tickets.search(1090),
+    print("Search for 6096:", sequential_tickets.search(6096),
           "(expected True)")
 
 if __name__ == "__main__":

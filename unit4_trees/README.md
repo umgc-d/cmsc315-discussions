@@ -30,8 +30,8 @@ present, and list the stored IDs in numerical order. Each node stored one
 ID rather than a complete ticket record.
 
 I inserted nine IDs in the order
-`[1050, 1025, 1075, 1010, 1035, 1060, 1090, 1030, 1040]`.
-This made `1050` the root and placed values in both subtrees.
+`[6000, 5963, 6078, 5914, 5987, 6031, 6096, 5972, 5991]`.
+This made `6000` the root and placed values in both subtrees.
 
 ### Recursive Insertion
 
@@ -53,8 +53,8 @@ I started each search at the root. A matching ID returned `True`, while
 an empty position returned `False`. Otherwise, the helper searched only
 the subtree that could contain the requested ID.
 
-I demonstrated searches for existing IDs `1050` and `1030`, followed by
-missing IDs `1000` and `1065`. The missing examples covered an ID below
+I demonstrated searches for existing IDs `6000` and `5972`, followed by
+missing IDs `5902` and `6053`. The missing examples covered an ID below
 the stored range and an ID between stored values.
 
 ### In-Order Traversal
@@ -69,12 +69,12 @@ appended IDs to that shared list without rearranging the tree.
 ### Edge Cases and Insertion Order
 
 I demonstrated that an empty tree returned `[]` from traversal and
-`False` from search. I also inserted `1035` again and compared traversal
+`False` from search. I also inserted `5987` again and compared traversal
 results before and afterward to confirm that the stored IDs were
 unchanged.
 
 I built a separate tree using the same IDs in ascending order. Every
-new ID became a right child, creating a chain. Searching for `1090`
+new ID became a right child, creating a chain. Searching for `6096`
 required nine node visits in that tree, compared with three in the
 original tree.
 
@@ -109,7 +109,7 @@ visited smaller IDs, the current ID, and then larger IDs, producing a
 sorted list without changing the tree.
 
 I used two insertion orders to compare search performance. Finding
-`1090` required three node visits in the original tree and nine after
+`6096` required three node visits in the original tree and nine after
 ascending insertion created a chain. A reasonably balanced BST supported
 O(log n) searches, compared with O(n) linear searches through an unsorted
 list. However, the sequential example demonstrated that BST searches
