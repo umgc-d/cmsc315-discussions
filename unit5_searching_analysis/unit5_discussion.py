@@ -26,7 +26,13 @@ def linear_search(lst, target):
     - Add comments explaining why linear search
       has O(n) time complexity.
     """
-    pass
+    # Check ticket IDs in order. A missing ID requires checking all n
+    # entries, so the worst-case time complexity is O(n).
+    for index, ticket_id in enumerate(lst):
+        if ticket_id == target:
+            return index
+
+    return -1
 
 
 def binary_search(lst, target):
@@ -42,7 +48,24 @@ def binary_search(lst, target):
     - Add comments explaining how each iteration
       reduces the search space.
     """
-    pass
+    left = 0
+    right = len(lst) - 1
+
+    while left <= right:
+        middle = (left + right) // 2
+        ticket_id = lst[middle]
+
+        if ticket_id == target:
+            return middle
+
+        # The IDs are sorted, so the midpoint comparison lets us
+        # discard the midpoint and one side of the remaining range.
+        if ticket_id < target:
+            left = middle + 1
+        else:
+            right = middle - 1
+
+    return -1
 
 
 def main():
@@ -61,7 +84,21 @@ def main():
     # 4. Use comments to clearly explain the results.
 
     print("\n=== SMALL DATASET TEST ===")
-    print("TODO: Create a small dataset and test both searches.")
+    small_export = [17748, 17773, 17829]
+    print(f"Ticket IDs in the sorted export: {small_export}")
+
+    # Both searches find 17829 at index 2 and return -1 for the missing ID.
+    for target in (17829, 17801):
+        linear_index = linear_search(small_export, target)
+        binary_index = binary_search(small_export, target)
+
+        print(f"\nSearching for ticket ID {target}")
+        print(f"Linear search returned {linear_index}")
+        print(f"Binary search returned {binary_index}")
+
+    print("\nLinear search checks IDs in order.")
+    print("Binary search starts at 17773 and checks to its right for both IDs.")
+    print("A return value of -1 means the ticket ID was not found.")
 
     # ===============================
     # TODO (Student): LARGE DATASET
@@ -75,7 +112,19 @@ def main():
     #    efficient as datasets grow larger.
 
     print("\n=== LARGE DATASET TEST ===")
-    print("TODO: Create a larger dataset and compare results.")
+    large_export = list(range(18000, 28000))
+    target = large_export[-1]
+
+    # Linear search checks every entry to reach the last ID.
+    # Binary search keeps the upper half after each midpoint below the target.
+    linear_index = linear_search(large_export, target)
+    binary_index = binary_search(large_export, target)
+
+    print(f"Searching for ticket ID {target} in {len(large_export):,} sorted IDs")
+    print(f"Linear search returned index {linear_index}")
+    print(f"Binary search returned index {binary_index}")
+    print("For this target, linear search checks 10,000 IDs.")
+    print("Binary search checks 14 IDs by narrowing the range at each step.")
 
     # ===============================
     # TODO (Student): EDGE CASES
@@ -93,7 +142,20 @@ def main():
     # Explain what happens in each case.
 
     print("\n=== EDGE CASE TESTS ===")
-    print("TODO: Demonstrate and explain edge cases.")
+    edge_cases = [
+        ("Empty export", [], 17773),
+        ("One ID, target present", [17773], 17773),
+        ("One ID, target missing", [17773], 17748),
+    ]
+
+    for description, export, target in edge_cases:
+        print(f"\n{description} (searching for {target} in {export})")
+        print(f"Linear search returned {linear_search(export, target)}")
+        print(f"Binary search returned {binary_search(export, target)}")
+
+    print("\nAn empty export has no IDs to check.")
+    print("In a one-item export, the only possible match is at index 0.")
+    print("Both searches return -1 if the only ID differs from the target.")
 
 
 if __name__ == "__main__":
