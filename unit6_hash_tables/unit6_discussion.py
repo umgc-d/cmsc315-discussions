@@ -38,6 +38,7 @@ def main():
 
     # Python dictionaries use a key's hash to determine an initial
     # index in the hash table, allowing for efficient lookup.
+    # If a different key occupies that slot, Python probes other slots.
     case_assignments[29039] = "Matthew Mann"
     case_assignments[21069] = "Mark Lyon"
     case_assignments[41622] = "Luke Bullock"
