@@ -33,7 +33,19 @@ def main():
 
 
     print("\n=== INSERT OPERATIONS ===")
-    print("TODO: Create a dictionary and add multiple key-value pairs.")
+    # Create an empty dictionary to track active case assignments.
+    case_assignments = {}
+
+    # Python dictionaries use a key's hash to determine an initial
+    # index in the hash table, allowing for efficient lookup.
+    case_assignments[29039] = "Matthew Mann"
+    case_assignments[21069] = "Mark Lyon"
+    case_assignments[41622] = "Luke Bullock"
+    case_assignments[39403] = "John Eagleton"
+    case_assignments[40018] = "Paul Swords"
+
+    print("Active case assignments:")
+    print(case_assignments)
 
     # ===============================
     # TODO (Student): LOOKUP OPERATIONS
@@ -45,7 +57,10 @@ def main():
     # 3. Add meaningful comments to explain how the lookup works.
 
     print("\n=== LOOKUP OPERATIONS ===")
-    print("TODO: Demonstrate successful key lookups.")
+    # Python hashes each case ID to locate its associated engineer
+    # without sequentially searching the dictionary.
+    print(f"Case 41622: {case_assignments[41622]}")
+    print(f"Case 40018: {case_assignments[40018]}")
 
     # ===============================
     # TODO (Student): UPDATE OPERATIONS
@@ -58,7 +73,17 @@ def main():
     #    a new value.
 
     print("\n=== UPDATE OPERATIONS ===")
-    print("TODO: Demonstrate updating an existing key.")
+    print("Before reassignment:")
+    print(case_assignments)
+
+    # Assigning a new value to an existing key replaces its
+    # previous value without creating a new dictionary entry.
+    case_assignments[29039] = "Mark Lyon"
+
+    print("Case 29039 reassigned from Matthew Mann to Mark Lyon.")
+
+    print("After reassignment:")
+    print(case_assignments)
 
     # ===============================
     # TODO (Student): DELETE OPERATIONS
@@ -70,8 +95,16 @@ def main():
     # 3. Use comments to explain what happens when a key is removed.
 
     print("\n=== DELETE OPERATIONS ===")
-    print("TODO: Demonstrate deleting a key-value pair.")
+    print("Before deletion:")
+    print(case_assignments)
 
+    # Remove the closed case and its associated engineer assignment.
+    del case_assignments[39403]
+
+    print("Closed case 39403 removed from active case assignments.")
+
+    print("After deletion:")
+    print(case_assignments)
     # ===============================
     # TODO (Student): EDGE CASES
     # ===============================
@@ -87,8 +120,23 @@ def main():
     # Explain what happens in each case.
 
     print("\n=== EDGE CASES ===")
-    print("TODO: Demonstrate and explain edge cases.")
+    # Look up a missing case using get() to avoid a KeyError.
+    print(f"Case 39403: {case_assignments.get(39403, 'Case not found')}")
 
+    # Check whether a case exists before attempting to delete it.
+    if 39403 in case_assignments:
+        del case_assignments[39403]
+    else:
+        print("Cannot delete case 39403 because it does not exist.")
+
+    # Prevent reassignment from inadvertently creating a new entry.
+    if 39403 in case_assignments:
+        case_assignments[39403] = "Paul Swords"
+    else:
+        print("Cannot reassign case 39403 because it does not exist.")
+
+    print("Final active case assignments:")
+    print(case_assignments)
 
 
 if __name__ == "__main__":
